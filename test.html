@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Supabase Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h2>Supabase Connection Test</h2>
+  <button onclick="loadProducts()">Load Products</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    const supabaseUrl = "https://svldensuerkwqcjncycq.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2bGRlbnN1ZXJrd3Fjam5jeWNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NTkzOTQsImV4cCI6MjA4MTQzNTM5NH0.12tSSTIrrnTC8pNA3brZy5WuK7aS2ENmXw31BVVaFk4";
+
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function loadProducts() {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*");
+
+      if (error) {
+        document.getElementById("output").innerText = error.message;
+      } else {
+        document.getElementById("output").innerText =
+          JSON.stringify(data, null, 2);
+      }
+    }
+  </script>
+</body>
+</html>
